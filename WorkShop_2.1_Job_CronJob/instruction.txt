@@ -20,24 +20,8 @@ Create Parallel Job for access redis and pull:
   Pods's inside
   -------------
   redis-cli -h redis
-  redis:6379> rpush job2 "BTC"
+  redis:6379> rpush job2 "BTC" "ETH" "USDT" "BNB" "SOL" "USDC" "XRP" "DOGE" "TON"
   (integer) 1
-  redis:6379> rpush job2 "ETH"
-  (integer) 2
-  redis:6379> rpush job2 "USDT"
-  (integer) 3
-  redis:6379> rpush job2 "BNB"
-  (integer) 4
-  redis:6379> rpush job2 "SOL"
-  (integer) 5
-  redis:6379> rpush job2 "USDC"
-  (integer) 6
-  redis:6379> rpush job2 "XRP"
-  (integer) 7
-  redis:6379> rpush job2 "DOGE"
-  (integer) 8
-  redis:6379> rpush job2 "TON"
-  (integer) 9
   redis:6379> lrange job2 0 -1
   -------------
   exit
@@ -52,35 +36,8 @@ Create Parallel Job for access redis and pull:
   kubectl get pods
   kubectl logs pods/<pods name>
  
- 8. Run redis-cli and re-entry vaule on redis by command:
-  kubectl exec -it redis-master -- sh
 
-  -------------
-  Pods's inside
-  -------------
-  redis-cli -h redis
-  redis:6379> rpush job2 "BTC" "ETH" "USDT" "BNB" "SOL" "USDC" "XRP" "DOGE" "TON" "BTC2" "ETH2" "USDT2" "BNB2" "SOL2" "USDC2" "XRP2" "DOGE2" "TON2" "BTC3" "ETH3" "USDT3" "BNB3" "SOL3" "USDC3" "XRP3" "DOGE3" "TON3" "BTC4" "ETH4" "USDT4" "BNB4" "SOL4" "USDC4" "XRP4" "DOGE4" "TON4" "BTC5" "ETH5" "USDT5" "BNB5" "SOL5" "USDC5" "XRP5" "DOGE5" "TON5"
-  (integer) 1
-  redis:6379> lrange job2 0 -1
-  -------------
-  exit
-  exit
-
- 9. Run cronjob by command:
-  kubectl apply -f https://raw.githubusercontent.com/praparn/kubernetes_202503/master/WorkShop_2.1_Job_CronJob/parallelism/job-parallel-cron.yml
-  kubectl describe cronjob/job-parallel-cron
-  watch kubectl get jobs
-  ------------
-  View Result
-  ------------
-  kubectl get pods
-  kubectl logs pods/<pods name>
-
- 10. Delete Cronjob by command:
-kubectl delete -f https://raw.githubusercontent.com/praparn/kubernetes_202503/master/WorkShop_2.1_Job_CronJob/parallelism/job-parallel-cron.yml
-
- 11. CleanUp lab:
-  kubectl delete pods/temp
+ 8. CleanUp lab:
   kubectl delete -f https://raw.githubusercontent.com/praparn/kubernetes_202503/master/WorkShop_2.1_Job_CronJob/parallelism/job-parallel.yml
   kubectl delete -f https://raw.githubusercontent.com/praparn/kubernetes_202503/master/WorkShop_2.1_Job_CronJob/parallelism/redis-pods.yml
   kubectl delete -f https://raw.githubusercontent.com/praparn/kubernetes_202503/master/WorkShop_2.1_Job_CronJob/parallelism/redis-service.yml
