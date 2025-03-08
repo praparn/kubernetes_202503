@@ -19,6 +19,8 @@ spec:
       volumeMounts:
       - mountPath: /temp
         name: homevol
+  imagePullSecrets:
+    - name: secpullhubdocker
   volumes:
     - name: homevol
       hostPath:

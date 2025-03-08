@@ -25,7 +25,9 @@ spec:
         limits:
           memory: "32Mi"
           cpu: "200m"
-          ephemeral-storage: "100Mi" 
+          ephemeral-storage: "100Mi"
       ports:
         - containerPort: 22
           protocol: TCP
+  imagePullSecrets:
+    - name: secpullhubdocker
