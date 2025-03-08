@@ -13,7 +13,7 @@ Volume by HostPath:
 
 5. Create file via Container by command:
   kubectl get pods -o wide
-	kubectl exec -it <pods name> sh
+	kubectl exec -it <pods name> -- sh
   touch /var/lib/containerd/test_cAdvisor.txt
   exit
 
@@ -30,7 +30,7 @@ Volume by HostPath:
   exit
   
 9. Access "cAdvisor Pods" and Check/Delte file by command:
-	kubectl exec -it <pods name> sh
+	kubectl exec -it <pods name> -- sh
   ls -lh /var/lib/containerd/
   rm /var/lib/containerd/test_webtest.txt
   rm /var/lib/containerd/test_cAdvisor.txt

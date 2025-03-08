@@ -25,3 +25,5 @@ spec:
           ports:
           - containerPort: 5000
             protocol: TCP
+      imagePullSecrets:
+        - name: secpullhubdocker
