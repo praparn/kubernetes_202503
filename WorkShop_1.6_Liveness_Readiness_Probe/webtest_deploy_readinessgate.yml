@@ -42,3 +42,5 @@ spec:
                 - /usr/src/app/main.py
             initialDelaySeconds: 15
             periodSeconds: 5
+      imagePullSecrets:
+        - name: secpullhubdocker

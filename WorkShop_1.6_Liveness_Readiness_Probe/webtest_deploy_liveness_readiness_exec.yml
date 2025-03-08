@@ -55,3 +55,5 @@ spec:
             failureThreshold: 10
             successThreshold: 1
             periodSeconds: 15
+      imagePullSecrets:
+        - name: secpullhubdocker
