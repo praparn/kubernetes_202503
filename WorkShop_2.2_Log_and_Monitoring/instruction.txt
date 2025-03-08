@@ -43,6 +43,11 @@ Part1: Container Logging:
 	*Test by open browser: 
 	https://<Public IP>:30010
 
+	*Remove kubernetes dashboard for saving resource:
+	helm delete kubernetes-dashboard --namespace kubernetes-dashboard
+	kubectl delete namespace/kubernetes-dashboard
+	
+
 11. Generate some load by command:
 	curl http://<private IP>:30500/init
 
