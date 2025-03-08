@@ -76,3 +76,5 @@ spec:
       - name: voldocker
         hostPath:
           path: /var/lib/docker/
+      imagePullSecrets:
+        - name: secpullhubdocker

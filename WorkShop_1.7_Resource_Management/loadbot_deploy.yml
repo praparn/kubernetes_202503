@@ -32,3 +32,5 @@ spec:
           image: labdocker/alpine:latest
           command: ["/bin/sh"]
           args: ["-c", "while true; do wget -q -O- http://webtest.default.svc.cluster.local:5000; done"]
+      imagePullSecrets:
+        - name: secpullhubdocker

@@ -21,7 +21,7 @@ This workshop will use execute some command on container for probe
 
 3. Access to container on pods and try to delete the file "main.py"
 	kubectl get pods
-	kubectl exec -it <pods name> sh -c webtest
+	kubectl exec -it <pods name> -c webtest -- sh 
 	rm main.py
 	exit	
 
@@ -32,7 +32,7 @@ This workshop will use execute some command on container for probe
 
 5. Access to container on pods and try to delete the file "main.py"
 	kubectl get pods --show-labels
-	kubectl exec -it <pods name> -c webtest sh 
+	kubectl exec -it <pods name> -c webtest -- sh 
 	ls -lh
 	exit
 
@@ -121,28 +121,26 @@ This workshop will use grpc get request some command on container for probe
 	kubectl get pods --show-labels
 	kubectl describe pods/<pods name>
 
-2. Test access browser/curl: http://<Public IP>:32600
-
-3. Edit file webtest_deploy_liveness_readiness_grpc.yml to change grpc path from 2379 init to 2380
+2. Edit file webtest_deploy_liveness_readiness_grpc.yml to change grpc path from 2379 init to 2380
 (vi webtest_deploy_liveness_readiness_grpc.yml)
 
-4. Apply new configuration by command:
+3. Apply new configuration by command:
 	kubectl apply -f webtest_deploy_liveness_readiness_grpc.yml 
 
-5. Check status of pods by command (3 -5 min):
+4. Check status of pods by command (3 -5 min):
 	kubectl get pods --show-labels
 	kubectl describe pods/<pods name>
 
-6. Edit file webtest_deploy_liveness_readiness_grpc.yml to change grpc path from 2380 init to 2379
+5. Edit file webtest_deploy_liveness_readiness_grpc.yml to change grpc path from 2380 init to 2379
 (vi webtest_deploy_liveness_readiness_grpc.yml)
 
-7. Apply new configuration by command:
+6. Apply new configuration by command:
 	kubectl apply -f webtest_deploy_liveness_readiness_grpc.yml
 
-8. Check status of pods by command (3 -5 min):
+7. Check status of pods by command (3 -5 min):
 	kubectl get pods --show-labels
 
-9. Cleanup Lab by command:
+8. Cleanup Lab by command:
 	kubectl delete -f webtest_deploy_liveness_readiness_grpc.yml
 
 ====================================================
@@ -163,7 +161,7 @@ This workshop will use execute some command on container for probe
 2. Test access browser/curl: http://<Public IP>:32500 (5 - 6 Time)
 
 3. Access to cotainer on pods (Deployment webtest1) and try to delete the file "main.py"
-	kubectl exec -it <pods name> sh -c webtest
+	kubectl exec -it <pods name> -c webtest -- sh
 	rm main.py
 	exit	
 
@@ -174,7 +172,7 @@ This workshop will use execute some command on container for probe
 5. Test access browser/curl: http://<Public IP>:32500 (5 - 6 Time)
 
 6. Access to container on pods (Deployment webtest1) and try to create the file "main.py"
-	kubectl exec -it <pods name> sh -c webtest
+	kubectl exec -it <pods name> -c webtest -- sh
 	cp mainlite.py main.py
 	exit
 

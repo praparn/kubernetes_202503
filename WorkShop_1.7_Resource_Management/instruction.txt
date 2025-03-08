@@ -5,12 +5,12 @@ Part0: Create Dashboard
 ====================================================
 ### Install Helm ###
 1. Install helm client on master node by command:
-	curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+   curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
    chmod 700 get_helm.sh
    ./get_helm.sh
 
 2. Check helm readiness and update by command:
-	 helm list			==> Expect blank
+	helm list			==> Expect blank
     (Remark: Case to rollback and reinitial helm: helm reset --force)
 
 3. Helm install kubernetes dashboard by command:
