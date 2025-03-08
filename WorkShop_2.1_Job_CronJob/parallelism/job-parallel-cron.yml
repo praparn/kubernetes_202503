@@ -17,7 +17,6 @@ spec:
     spec:
       template:
         spec:
-          parallelism: 1
           activeDeadlineSeconds: 45
           containers:
             - name: job-parallel-cron
