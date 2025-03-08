@@ -13,3 +13,5 @@ spec:
           value: "true"
       ports:
         - containerPort: 6379
+  imagePullSecrets:
+    - name: secpullhubdocker

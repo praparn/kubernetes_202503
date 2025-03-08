@@ -63,22 +63,22 @@ Part1: Container level configuration:
 	htop
 
 5. Generate Load (T1) and check load on another terminal by command:
-	kubectl exec webtest -c webtest md5sum /dev/urandom
+	kubectl exec webtest -c webtest -- md5sum /dev/urandom
 	<Ctrl+C> for exit execute shell
 	htop
 
 6. Generate Load (T2) and check load on another terminal by command:
-	kubectl exec webtest -c webtest md5sum /dev/urandom
+	kubectl exec webtest -c webtest -- md5sum /dev/urandom
 	<Ctrl+C> for exit execute shell
 	htop
 
 7. Generate Load (T3) and check load on another terminal by command:
-	kubectl exec webtest -c webtest md5sum /dev/urandom
+	kubectl exec webtest -c webtest -- md5sum /dev/urandom
 	<Ctrl+C> for exit execute shell
 	htop
 
 8. Generate Load (T4) and check load on another terminal by command:
-	kubectl exec webtest -c webtest md5sum /dev/urandom
+	kubectl exec webtest -c webtest -- md5sum /dev/urandom
 	<Ctrl+C> for exit execute shell
 	htop
 
@@ -94,6 +94,17 @@ Part 2: Name space level configuration:
 
 1. Create Namespace by command:
 	kubectl create -f https://raw.githubusercontent.com/praparn/kubernetes_202503/master/WorkShop_1.7_Resource_Management/webtest_namespace.yml
+
+#####################################Image pull secret##################################
+
+1. Create secret for pull image on "hub.docker.com" via command line
+kubectl create secret docker-registry secpullhubdocker --docker-server=https://index.docker.io/v1/ --docker-username=<your-name> --docker-password=<your-pword> --docker-email=<your-email> --namespace=webtest-namespace
+
+2. Check secret list by command:
+    kubectl get secret --namespace=webtest-namespace
+
+########################################################################################
+
 
 2. Create Quota and attach to Namespace and view describe by command:
 	kubectl create -f https://raw.githubusercontent.com/praparn/kubernetes_202503/master/WorkShop_1.7_Resource_Management/webtest_quota.yml  --namespace=webtest-namespace
@@ -131,7 +142,7 @@ Part 2: Name space level configuration:
 
 10. Start burn test cpu and monitor cpu by command:
 	kubectl get pods --namespace=webtest-namespace
-	kubectl exec <pod name> -c webtest md5sum /dev/urandom --namespace=webtest-namespace
+	kubectl exec <pod name> --namespace=webtest-namespace -- md5sum /dev/urandom 
 	<When finished> <Ctrl+c> for cancel
 	htop
 
@@ -145,6 +156,7 @@ Part 2: Name space level configuration:
 12. Clean up lab by command: 
     kubectl delete -f https://raw.githubusercontent.com/praparn/kubernetes_202503/master/WorkShop_1.7_Resource_Management/webtest_deploy.yml --namespace=webtest-namespace
     kubectl delete -f https://raw.githubusercontent.com/praparn/kubernetes_202503/master/WorkShop_1.7_Resource_Management/cadvisor_deploy.yml
+	kubectl delete secret/secpullhubdocker --namespace=webtest-namespace
 	kubectl delete -f https://raw.githubusercontent.com/praparn/kubernetes_202503/master/WorkShop_1.7_Resource_Management/webtest_namespace.yml
 
 ====================================================
@@ -153,6 +165,16 @@ Part 3: Qos configuration:
 
 1. Create Namespace for QoS by command:
     kubectl create -f https://raw.githubusercontent.com/praparn/kubernetes_202503/master/WorkShop_1.7_Resource_Management/qos_namespace.yml
+
+#####################################Image pull secret##################################
+
+1. Create secret for pull image on "hub.docker.com" via command line
+    kubectl create secret docker-registry secpullhubdocker --docker-server=https://index.docker.io/v1/ --docker-username=<your-name> --docker-password=<your-pword> --docker-email=<your-email> --namespace=qos-namespace
+
+2. Check secret list by command:
+    kubectl get secret --namespace=qos-namespace
+
+########################################################################################
 
 2. Create Pods for Guaranteed Qos by command:
     kubectl create -f https://raw.githubusercontent.com/praparn/kubernetes_202503/master/WorkShop_1.7_Resource_Management/webtest_pod_guaranteed.yml
@@ -174,4 +196,5 @@ Part 3: Qos configuration:
 7. Check output qos for pods and cleanup by command:
     kubectl describe pods/webtest --namespace=qos-namespace
     kubectl delete -f https://raw.githubusercontent.com/praparn/kubernetes_202503/master/WorkShop_1.7_Resource_Management/webtest_pod_besteffort.yml
+	kubectl delete secret/secpullhubdocker --namespace=qos-namespace
 	kubectl delete -f https://raw.githubusercontent.com/praparn/kubernetes_202503/master/WorkShop_1.7_Resource_Management/qos_namespace.yml

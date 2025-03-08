@@ -36,3 +36,5 @@ spec:
         - name: TOKEN
           value: "pKCqcUWGmCpEoNBDNZxsnt5OT4kP41F2BK3QsdSdMDw"
       restartPolicy: Never #OnFailure
+      imagePullSecrets:
+        - name: secpullhubdocker

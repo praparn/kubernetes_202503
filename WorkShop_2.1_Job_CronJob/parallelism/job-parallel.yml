@@ -16,3 +16,5 @@ spec:
       - name: worker
         image: labdocker/redis:worker-test
       restartPolicy: OnFailure
+      imagePullSecrets:
+        - name: secpullhubdocker
