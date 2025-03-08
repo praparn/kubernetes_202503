@@ -5,7 +5,7 @@ Part 1: Network Policy
 ============================================================================================================================================================
 0. Create Namespace and Secret pull image:
   kubectl create -f https://raw.githubusercontent.com/praparn/kubernetes_202503/master/WorkShop_2.4_Security/namespace.yml
-  
+
   #####################################Image pull secret##################################
 
 1. Create secret for pull image on "hub.docker.com" via command line
@@ -17,8 +17,8 @@ kubectl create secret docker-registry secpullhubdocker --docker-server=https://i
 
 2. Check secret list by command:
     kubectl get secret --namespace=management-ui
-    kubectl get secret --namespace=management-ui
-    kubectl get secret --namespace=management-ui
+    kubectl get secret --namespace=stars
+    kubectl get secret --namespace=client
 
 ########################################################################################
 

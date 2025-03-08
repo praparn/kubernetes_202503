@@ -43,7 +43,7 @@ Part1: Container Logging:
 	*Test by open browser: 
 	https://<Public IP>:30010
 
-	*Remove kubernetes dashboard for saving resource:
+	*Option: Can kubernetes dashboard for saving resource:
 	helm delete kubernetes-dashboard --namespace kubernetes-dashboard
 	kubectl delete namespace/kubernetes-dashboard
 	
