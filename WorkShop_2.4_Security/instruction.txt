@@ -187,7 +187,7 @@ kubectl create -f https://raw.githubusercontent.com/praparn/kubernetes_202503/ma
 
 5. Access to pods and check user id and file permission by command:
 kubectl get pods -n=namespace-psa
-kubectl exec -it alpineweb sh -n=namespace-psa
+kubectl exec -it alpineweb -n=namespace-psa -- sh
 ps 											==> record USER
 mkdir /data && touch /data/testfile			
 ls /data/ 									
@@ -227,7 +227,15 @@ sudo apt-get update && sudo apt-get install etcd-client
 3. Deploy application stack use default secret/configmap as command below:
   3.1. Create Namespace by command:
 	kubectl create -f https://raw.githubusercontent.com/praparn/kubernetes_202503/master/WorkShop_1.8_ConfigMap_Secret/webmicroservice_namespace.yml
+#####################################Image pull secret##################################
 
+     3.1.1 Create secret for pull image on "hub.docker.com" via command line
+     kubectl create secret docker-registry secpullhubdocker --docker-server=https://index.docker.io/v1/ --docker-username=<your-name> --docker-password=<your-pword> --docker-email=<your-email> --namespace=webmicroservice
+
+     3.1.2 Check secret list by command:
+     kubectl get secret --namespace=webmicroservice
+
+########################################################################################
   3.2. Create ConfigMap by command:
 	kubectl create -f https://raw.githubusercontent.com/praparn/kubernetes_202503/master/WorkShop_1.8_ConfigMap_Secret/webmodule_configmap.yml
 	kubectl get configmap -n webmicroservice
@@ -272,6 +280,7 @@ sudo ETCDCTL_API=3 etcdctl \
 
 8. Enhance encryption provider on path "/etc/kubernetes/manifests/kube-apiserver.yaml" and edit file as detail below
   sudo su -
+  cp /etc/kubernetes/manifests/kube-apiserver.yaml /etc/kubernetes/manifests/kube-apiserver-original.yaml
   vi /etc/kubernetes/manifests/kube-apiserver.yaml
 ---
 #
@@ -338,3 +347,4 @@ sudo ETCDCTL_API=3 etcdctl \
 16. Cleanup lab by command:
 	kubectl delete -f https://raw.githubusercontent.com/praparn/kubernetes_202503/master/WorkShop_1.8_ConfigMap_Secret/databasemodule_deploy_config.yml
 	kubectl delete -f https://raw.githubusercontent.com/praparn/kubernetes_202503/master/WorkShop_1.8_ConfigMap_Secret/webmicroservice_namespace.yml
+  sudo cp /etc/kubernetes/manifests/kube-apiserver-original.yaml /etc/kubernetes/manifests/kube-apiserver.yaml 

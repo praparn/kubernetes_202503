@@ -81,7 +81,7 @@ tmux new -s Lab
 4. (Master) Prepare configuration for initial kubernetes master
     (run export environment)
 	cd ~
-	curl https://raw.githubusercontent.com/praparn/sourcesetup/master/kubernetes_initial/version130/kubeadm-init.yaml > ~/kubeadm-init.yaml
+	curl https://raw.githubusercontent.com/praparn/sourcesetup/master/kubernetes_initial/version132/kubeadm-init.yaml > ~/kubeadm-init.yaml
   	sed -i -e "s/2.2.2.2/$HostnameMaster1/g" ~/kubeadm-init.yaml
   	sed -i -e "s/hostnamemaster/$HostnameMaster1/g" ~/kubeadm-init.yaml
   	sed -i -e "s/KubernetesClusterName/$ClusterName/g" ~/kubeadm-init.yaml
@@ -137,7 +137,7 @@ UDP  ip-10-96-0-10.ap-southeast-1 rr
 	-------------------------------------------------
 
 9. (Master) Create cilium network component by command:
-    cilium install
+    cilium install --set cluster.name=kuberneteslab (Ref: https://github.com/cilium/cilium/issues/34006)
 	cilium status --wait
 	
 10. (Master) Check master readiness and dns by command and enable hubble ui (Take 5 - 10 min):
@@ -193,7 +193,7 @@ eyJhbGciOiJSUzI1NiIsImtpZCI6IkZrTkFjN296TUxsbmFfZmU0MklfLVdUdnRjQXFyMWJ1TzFLbWRD
 14. (Worker1) Prepare configuration for initial kubernetes worker:
 (run export environment)
 cd ~
-curl https://raw.githubusercontent.com/praparn/sourcesetup/master/kubernetes_initial/version130/kubeadm-join-worker.yaml > ~/kubeadm-join-worker.yaml
+curl https://raw.githubusercontent.com/praparn/sourcesetup/master/kubernetes_initial/version132/kubeadm-join-worker.yaml > ~/kubeadm-join-worker.yaml
 sed -i -e "s/hostnamelb/$HostnameMaster1/g" ~/kubeadm-join-worker.yaml
 sed -i -e "s/token: tokenid/token: $tokenid/g" ~/kubeadm-join-worker.yaml
 sed -i -e "s/sha256:cahash/$cacerhash/g" ~/kubeadm-join-worker.yaml
@@ -209,7 +209,7 @@ htop
 16. (Worker2) Prepare configuration for initial kubernetes worker:
 (run export environment)
 cd ~
-curl https://raw.githubusercontent.com/praparn/sourcesetup/master/kubernetes_initial/version130/kubeadm-join-worker.yaml > ~/kubeadm-join-worker.yaml
+curl https://raw.githubusercontent.com/praparn/sourcesetup/master/kubernetes_initial/version132/kubeadm-join-worker.yaml > ~/kubeadm-join-worker.yaml
 sed -i -e "s/hostnamelb/$HostnameMaster1/g" ~/kubeadm-join-worker.yaml
 sed -i -e "s/token: tokenid/token: $tokenid/g" ~/kubeadm-join-worker.yaml
 sed -i -e "s/sha256:cahash/$cacerhash/g" ~/kubeadm-join-worker.yaml
@@ -349,12 +349,21 @@ ingress-nginx-controller             LoadBalancer   10.108.51.60   ae714106db8af
 ingress-nginx-controller-admission   ClusterIP      10.97.28.203   <none>                                                                               443/TCP                      100s
 ========================================
 
-    27.4 Wait (5 - 10 min) for NLB operate done and check response by command: (Remark: This need some manual operate on AWS side)
+    27.4 Wait (5 - 10 min) for NLB operate done and check response by command: (Remark: This need some operate on AWS side)
 	curl http://<CNAME of NLB>
 	curl https://<CNAME of NLB> -k
 
 
 28. (Master) Test deploy ingress service
+#####################################Image pull secret##################################
+
+  28.1 Create secret for pull image on "hub.docker.com" via command line
+kubectl create secret docker-registry secpullhubdocker --docker-server=https://index.docker.io/v1/ --docker-username=<your-name> --docker-password=<your-pword> --docker-email=<your-email>
+
+  28.2 Check secret list by command:
+    kubectl get secret 
+
+########################################################################################
 # Create Service/Pods/Deployment for webtest1 and webtest2 by command:
 	kubectl create -f https://raw.githubusercontent.com/praparn/kubernetes_202503/master/WorkShop_2.3_Ingress_Network/webtest_deploy.yml
 	kubectl create -f https://raw.githubusercontent.com/praparn/kubernetes_202503/master/WorkShop_2.3_Ingress_Network/webtest_deploy2.yml
