@@ -12,7 +12,9 @@ Training_DockerZerotoHero_StudentGX_3   			NodePort					10.0.1.X								X.X.X.X	
 Part 1: Create Storage Class and Test Provision Disk
 ===================================================
 1. (Master) Install "AWS EBS CSI Driver" for operate disk with AWS by command: 
-    kubectl apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernetes/overlays/stable/?ref=release-1.30"
+    *Remark: Reference from KB (https://github.com/kubernetes-sigs/aws-ebs-csi-driver/blob/master/docs/install.md). EC2 need to configure IMDS hop limit before install (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-IMDS-existing-instances.html#modify-PUT-response-hop-limit):
+
+    kubectl apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernetes/overlays/stable/?ref=release-1.40"
     watch kubectl get pods -n kube-system
 
 2. (Master) Create "Storage Class" for AWS and check by command:
@@ -61,7 +63,7 @@ http://<any public ip>:32500
 
 4. (Master) Access to pods by kubectl or docker exec and check mount volume by command:
 kubectl get pods
-kubectl exec -it <pods name> sh
+kubectl exec -it <pods name> -- sh
 ls
 df -h
 

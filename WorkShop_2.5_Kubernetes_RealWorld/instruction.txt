@@ -1,11 +1,17 @@
 Instruction for Workshop 2.5 Kubernetes in RealWorld:
 Note: This instruction will start lab for kubernetes's cluster for real workshop:
 
-0. Reinitial your machine before grouping with your friend by command:
+0. Reinitial your machine before grouping with your friend by command: (Run slowly step-by-step)
+	kubectl delete -f https://raw.githubusercontent.com/praparn/kubernetes_202503/master/WorkShop_2.3_Ingress_Network/Kong/gatewayclass-gateway.yml
+	kubectl delete -f https://raw.githubusercontent.com/praparn/kubernetes_202503/master/WorkShop_2.3_Ingress_Network/Kong/standard-install.yml
+	kubectl delete -f ~/kubernetes_202503/WorkShop_2.5_Kubernetes_RealWorld/ingress-nginx/deploy/static/provider/baremetal/deploy.yaml
+	helm uninstall kubernetes-dashboard --namespace kubernetes-dashboard
+	kubectl delete namespace kubernetes-dashboard
+	sudo cp /etc/kubernetes/manifests/kube-apiserver-original.yaml /etc/kubernetes/manifests/kube-apiserver.yaml 
 	cilium hubble disable
     cilium uninstall --wait
 	sudo su -
-    kubeadm reset					==> answer: y
+    kubeadm reset					==> answer: y (Remark: may found some DeadlineExceeded for stop all running pods)
 	rm -rf /var/lib/etcd
 	rm -rf /home/ubuntu/.kube
 	rm -rf /etc/kubernetes
@@ -56,7 +62,6 @@ Training_DockerZerotoHero_StudentGX_3   	NodePort		10.200.X.X					X.X.X.X							
   export HostnameMaster1=<hostname master1>
   export HostnameWorker1=<hostname worker1>
   export HostnameWorker2=<hostname worker2>
-
 
   export tokenid=<tokenid>   #export this after master node had been initial
   export cacerhash=<CA-Cert-Hash>   #export this after master node had been initial

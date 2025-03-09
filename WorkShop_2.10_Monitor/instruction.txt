@@ -44,10 +44,11 @@ kubectl delete namespace monitoring
 	kubectl get svc -n=monitoring
 
 5. (Master) Set port-forward for Grafana's dashboard
-	kubectl port-forward --address 0.0.0.0 pods/<Grafana pods's name> 3000:3000 -n=monitoring
-	(Ex: kubectl port-forward --address 0.0.0.0 pods/grafana-5d8f767-25lx5 3000:3000 -n=monitoring)
+	kubectl -n monitoring patch svc prometheus-operator-grafana --type='json' -p '[{"op":"replace","path":"/spec/type","value":"NodePort"},{"op":"replace","path":"/spec/ports/0/nodePort","value":30050}]'
 
-6. (local) Open browser and open granfana dashboard by url http://<Public IP of Master>:3000
+	Access ur: http://<Any Public IP>:30050
+
+6. (local) Open browser and open granfana dashboard by url http://<Any Public IP>:30050
 	Username: admin
 	Password: prom-operator
 	*Remark: check by command: 
@@ -65,5 +66,7 @@ kubectl delete namespace monitoring
    kubectl delete crd servicemonitors.monitoring.coreos.com
    kubectl delete crd thanosrulers.monitoring.coreos.com
    kubectl delete namespace monitoring
-   kubectl delete namespace ingress-nginx
+   kubectl delete -f ~/kubernetes_202503/WorkShop_2.5_Kubernetes_RealWorld/ingress-nginx/deploy/static/provider/aws/deploy.yaml
+   helm uninstall kubernetes-dashboard -n kubernetes-dashboard
+   kubectl delete namespace kubernetes-dashboard
 

@@ -282,6 +282,7 @@ sudo ETCDCTL_API=3 etcdctl \
   sudo su -
   cp /etc/kubernetes/manifests/kube-apiserver.yaml /etc/kubernetes/manifests/kube-apiserver-original.yaml
   vi /etc/kubernetes/manifests/kube-apiserver.yaml
+  exit
 ---
 #
 # This is a fragment of a manifest for a static Pod.
@@ -347,4 +348,3 @@ sudo ETCDCTL_API=3 etcdctl \
 16. Cleanup lab by command:
 	kubectl delete -f https://raw.githubusercontent.com/praparn/kubernetes_202503/master/WorkShop_1.8_ConfigMap_Secret/databasemodule_deploy_config.yml
 	kubectl delete -f https://raw.githubusercontent.com/praparn/kubernetes_202503/master/WorkShop_1.8_ConfigMap_Secret/webmicroservice_namespace.yml
-  sudo cp /etc/kubernetes/manifests/kube-apiserver-original.yaml /etc/kubernetes/manifests/kube-apiserver.yaml 
